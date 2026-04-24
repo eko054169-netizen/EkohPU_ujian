@@ -24,9 +24,11 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
     setError('');
 
     // Demo Authentication Logic
+    const normalizedUsername = username.toLowerCase();
+    const normalizedPassword = password.toLowerCase();
+
     if (loginType === 'STUDENT') {
-      // Allow any username/password for demo, but specifically support "eko sanjaya"
-      if (username === 'ekosanjaya' && password === '123') {
+      if (normalizedUsername === 'ekosanjaya' && normalizedPassword === '123') {
         const student: UserType = {
           id: 'student-1',
           username: 'ekosanjaya',
@@ -38,7 +40,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
         onLogin(student);
         navigate('/app');
       } else if (username && password) {
-        // Dynamic demo student
+        // Any student login works in demo
         const student: UserType = {
           id: `student-${Date.now()}`,
           username: username,
@@ -54,7 +56,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
       }
     } else {
       // Staff/Teacher/Admin Login
-      if (username === 'admin' && password === 'admin') {
+      if (normalizedUsername === 'admin') {
         const admin: UserType = {
           id: 'admin-1',
           username: 'admin',
@@ -63,7 +65,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
         };
         onLogin(admin);
         navigate('/app');
-      } else if (username === 'guru' && password === 'guru') {
+      } else if (normalizedUsername === 'guru') {
         const guru: UserType = {
           id: 'guru-1',
           username: 'guru',
@@ -72,15 +74,25 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
         };
         onLogin(guru);
         navigate('/app');
+      } else if (normalizedUsername === 'staff') {
+        const staff: UserType = {
+          id: 'staff-1',
+          username: 'staff',
+          fullname: 'Ibu Staff Administrasi',
+          role: 'TENAGA_KEPENDIDIKAN'
+        };
+        onLogin(staff);
+        navigate('/app');
       } else if (username && password) {
-        const guru: UserType = {
-            id: `guru-${Date.now()}`,
-            username: username,
-            fullname: username.toUpperCase(),
-            role: 'GURU'
-          };
-          onLogin(guru);
-          navigate('/app');
+        // Generic Staff Login
+        const staff: UserType = {
+          id: `staff-${Date.now()}`,
+          username: username,
+          fullname: username.toUpperCase(),
+          role: 'TENAGA_KEPENDIDIKAN'
+        };
+        onLogin(staff);
+        navigate('/app');
       } else {
         setError('Username/Password salah');
       }
@@ -181,7 +193,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
                   className="w-full pl-12 pr-4 py-4 bg-white border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-slate-800 placeholder:text-slate-300 italic"
-                  placeholder={loginType === 'STUDENT' ? "Masukkan NISN" : "Username Staff"}
+                  placeholder={loginType === 'STUDENT' ? "Contoh: ekosanjaya" : "Contoh: admin / guru / staff"}
                   required
                 />
               </div>
@@ -198,7 +210,7 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
                   value={password}
                   onChange={(e) => setPassword(e.target.value)}
                   className="w-full pl-12 pr-12 py-4 bg-white border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-primary/20 focus:border-primary transition-all text-slate-800 placeholder:text-slate-300 italic"
-                  placeholder="********"
+                  placeholder="Password (123 / admin / guru / staff)"
                   required
                 />
                 <button
@@ -242,9 +254,23 @@ export default function LoginPage({ onLogin }: LoginPageProps) {
             </button>
           </form>
 
-          <p className="mt-8 text-center text-slate-400 text-sm italic">
-            Lupa password? Silakan hubungi admin di ruang tenaga kependidikan.
-          </p>
+          <div className="mt-8 p-4 bg-slate-100/50 rounded-2xl border border-slate-200 border-dashed">
+            <p className="text-[10px] font-bold text-slate-400 uppercase tracking-widest mb-2 text-center">Akun Demo (Uji Coba)</p>
+            <div className="grid grid-cols-2 gap-2">
+              <div className="p-2 bg-white rounded-lg text-[9px] text-slate-500 italic">
+                <span className="font-bold text-primary">Siswa:</span> ekosanjaya / 123
+              </div>
+              <div className="p-2 bg-white rounded-lg text-[9px] text-slate-500 italic">
+                <span className="font-bold text-primary">Admin:</span> admin / admin
+              </div>
+              <div className="p-2 bg-white rounded-lg text-[9px] text-slate-500 italic">
+                <span className="font-bold text-primary">Guru:</span> guru / guru
+              </div>
+              <div className="p-2 bg-white rounded-lg text-[9px] text-slate-500 italic">
+                <span className="font-bold text-primary">Staff:</span> staff / staff
+              </div>
+            </div>
+          </div>
         </motion.div>
       </div>
     </div>

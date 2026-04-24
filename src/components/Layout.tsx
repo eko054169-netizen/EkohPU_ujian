@@ -11,7 +11,8 @@ import {
   X, 
   User as UserIcon, 
   ClipboardList,
-  GraduationCap
+  GraduationCap,
+  FileText
 } from 'lucide-react';
 import { User } from '../types';
 import { cn } from '../lib/utils';
