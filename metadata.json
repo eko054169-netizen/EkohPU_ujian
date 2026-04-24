@@ -1,0 +1,13 @@
+{
+  "name": "SMK Prima Unggul - Portal Ujian & Absensi",
+  "description": "Portal terintegrasi untuk ujian online dan absensi siswa/guru SMK Prima Unggul Tangerang Selatan.",
+  "requestFramePermissions": [
+    "camera",
+    "geolocation"
+  ],
+  "majorCapabilities": [
+    "online-exams",
+    "attendance-tracking",
+    "user-management"
+  ]
+}
